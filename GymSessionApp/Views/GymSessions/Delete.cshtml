@@ -1,0 +1,62 @@
+﻿@model GymSessionApp.Models.GymSession
+
+@{
+    ViewData["Title"] = "Delete Gym Session";
+}
+
+<div class="delete-container">
+    <h2>@ViewData["Title"]</h2>
+
+    <div class="alert alert-warning">
+        <h4>Are you sure you want to delete this session?</h4>
+        <p>This action cannot be undone.</p>
+    </div>
+
+    <div class="details-card">
+        <div class="card-header">
+            <h3>@Html.DisplayFor(model => model.SessionName)</h3>
+            <span class="status-badge @(Model.IsActive ? "status-active" : "status-inactive")">
+                @(Model.IsActive ? "Active" : "Inactive")
+            </span>
+        </div>
+
+        <div class="card-body">
+            <div class="details-grid">
+                <div class="detail-item">
+                    <label>@Html.DisplayNameFor(model => model.TrainerName):</label>
+                    <span>@Html.DisplayFor(model => model.TrainerName)</span>
+                </div>
+
+                <div class="detail-item">
+                    <label>@Html.DisplayNameFor(model => model.StartTime):</label>
+                    <span>@Html.DisplayFor(model => model.StartTime)</span>
+                </div>
+
+                <div class="detail-item">
+                    <label>@Html.DisplayNameFor(model => model.EndTime):</label>
+                    <span>@Html.DisplayFor(model => model.EndTime)</span>
+                </div>
+
+                <div class="detail-item">
+                    <label>@Html.DisplayNameFor(model => model.Capacity):</label>
+                    <span>@Html.DisplayFor(model => model.Capacity) participants</span>
+                </div>
+
+                @if (!string.IsNullOrEmpty(Model.Description))
+                {
+                    <div class="detail-item full-width">
+                        <label>@Html.DisplayNameFor(model => model.Description):</label>
+                        <p>@Html.DisplayFor(model => model.Description)</p>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="card-actions">
+            <form asp-action="Delete" method="post" style="display: inline;">
+                <button type="submit" class="btn btn-danger">Confirm Delete</button>
+            </form>
+            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+        </div>
+    </div>
+</div>

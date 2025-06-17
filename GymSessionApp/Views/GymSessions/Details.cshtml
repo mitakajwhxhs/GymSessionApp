@@ -1,0 +1,61 @@
+﻿@model GymSessionApp.Models.GymSession
+
+@{
+    ViewData["Title"] = "Session Details";
+}
+
+<div class="details-container">
+    <h2>@ViewData["Title"]</h2>
+
+    <div class="details-card">
+        <div class="card-header">
+            <h3>@Html.DisplayFor(model => model.SessionName)</h3>
+            <span class="status-badge @(Model.IsActive ? "status-active" : "status-inactive")">
+                @(Model.IsActive ? "Active" : "Inactive")
+            </span>
+        </div>
+
+        <div class="card-body">
+            <div class="details-grid">
+                <div class="detail-item">
+                    <label>@Html.DisplayNameFor(model => model.TrainerName):</label>
+                    <span>@Html.DisplayFor(model => model.TrainerName)</span>
+                </div>
+
+                <div class="detail-item">
+                    <label>@Html.DisplayNameFor(model => model.StartTime):</label>
+                    <span>@Html.DisplayFor(model => model.StartTime)</span>
+                </div>
+
+                <div class="detail-item">
+                    <label>@Html.DisplayNameFor(model => model.EndTime):</label>
+                    <span>@Html.DisplayFor(model => model.EndTime)</span>
+                </div>
+
+                <div class="detail-item">
+                    <label>@Html.DisplayNameFor(model => model.Capacity):</label>
+                    <span>@Html.DisplayFor(model => model.Capacity) participants</span>
+                </div>
+
+                <div class="detail-item">
+                    <label>@Html.DisplayNameFor(model => model.CreatedDate):</label>
+                    <span>@Html.DisplayFor(model => model.CreatedDate)</span>
+                </div>
+
+                @if (!string.IsNullOrEmpty(Model.Description))
+                {
+                    <div class="detail-item full-width">
+                        <label>@Html.DisplayNameFor(model => model.Description):</label>
+                        <p>@Html.DisplayFor(model => model.Description)</p>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="card-actions">
+            <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-warning">Edit</a>
+            <a asp-action="Delete" asp-route-id="@Model?.Id" class="btn btn-danger">Delete</a>
+            <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,70 @@
+﻿@model GymSessionApp.Models.GymSession
+
+@{
+    ViewData["Title"] = "Create Gym Session";
+}
+
+<div class="form-container">
+    <h2>@ViewData["Title"]</h2>
+
+    <form asp-action="Create" class="gym-form">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="form-group">
+            <label asp-for="SessionName" class="control-label"></label>
+            <input asp-for="SessionName" class="form-control" placeholder="Enter session name" />
+            <span asp-validation-for="SessionName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="TrainerName" class="control-label"></label>
+            <input asp-for="TrainerName" class="form-control" placeholder="Enter trainer name" />
+            <span asp-validation-for="TrainerName" class="text-danger"></span>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label asp-for="StartTime" class="control-label"></label>
+                <input asp-for="StartTime" class="form-control" type="datetime-local" />
+                <span asp-validation-for="StartTime" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="EndTime" class="control-label"></label>
+                <input asp-for="EndTime" class="form-control" type="datetime-local" />
+                <span asp-validation-for="EndTime" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Capacity" class="control-label"></label>
+            <input asp-for="Capacity" class="form-control" type="number" min="1" max="50" placeholder="Maximum participants" />
+            <span asp-validation-for="Capacity" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Description" class="control-label"></label>
+            <textarea asp-for="Description" class="form-control" rows="4" placeholder="Enter session description (optional)"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div class="form-group checkbox-group">
+            <label asp-for="IsActive" class="checkbox-label">
+                <input asp-for="IsActive" type="checkbox" checked />
+                <span class="checkmark"></span>
+                @Html.DisplayNameFor(model => model.IsActive)
+            </label>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Create Session</button>
+            <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

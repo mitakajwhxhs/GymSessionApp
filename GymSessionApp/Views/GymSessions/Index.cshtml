@@ -1,0 +1,84 @@
+﻿@model IEnumerable<GymSessionApp.Models.GymSession>
+
+@{
+    ViewData["Title"] = "Gym Sessions";
+}
+
+<div class="gym-sessions-container">
+    <h2>@ViewData["Title"]</h2>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+    <div class="actions-bar">
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="icon">➕</i> Create New Session
+        </a>
+
+        <form asp-action="Index" method="get" class="search-form">
+            <div class="search-container">
+                <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" placeholder="Search sessions or trainers..." />
+                <button type="submit" class="btn btn-search">Search</button>
+                <a asp-action="Index" class="btn btn-secondary">Clear</a>
+            </div>
+        </form>
+    </div>
+
+    <div class="table-container">
+        <table class="gym-table">
+            <thead>
+                <tr>
+                    <th>
+                        <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                            Session Name
+                        </a>
+                    </th>
+                    <th>Trainer</th>
+                    <th>
+                        <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                            Start Time
+                        </a>
+                    </th>
+                    <th>End Time</th>
+                    <th>Capacity</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr class="@(item.IsActive ? "active-session" : "inactive-session")">
+                        <td>@Html.DisplayFor(modelItem => item.SessionName)</td>
+                        <td>@Html.DisplayFor(modelItem => item.TrainerName)</td>
+                        <td>@Html.DisplayFor(modelItem => item.StartTime)</td>
+                        <td>@Html.DisplayFor(modelItem => item.EndTime)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Capacity)</td>
+                        <td>
+                            <span class="status-badge @(item.IsActive ? "status-active" : "status-inactive")">
+                                @(item.IsActive ? "Active" : "Inactive")
+                            </span>
+                        </td>
+                        <td class="actions">
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info btn-sm">View</a>
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="no-data">
+            <p>No gym sessions found.</p>
+            <a asp-action="Create" class="btn btn-primary">Create your first session</a>
+        </div>
+    }
+</div>
